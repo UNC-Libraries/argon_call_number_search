@@ -55,6 +55,7 @@ module ArgonCallNumberSearch
       search_state.params[:clause].keys
     end
 
+    # rubocop:disable Metrics/AbcSize
     def call_number_query_str
       return search_state.params[:q].to_s if search_state.params[:search_field] == 'call_number'
       return unless advanced_search?
@@ -64,6 +65,7 @@ module ArgonCallNumberSearch
         return current_param[:query].to_s if current_param[:field] == 'call_number'
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def call_number_queries
       [lc_callno_query,
