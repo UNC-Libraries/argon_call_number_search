@@ -7,7 +7,7 @@ require 'argon_call_number_search/version'
 Gem::Specification.new do |spec|
   spec.name          = 'argon_call_number_search'
   spec.version       = ArgonCallNumberSearch::VERSION
-  spec.required_ruby_version = '>= 2.7.5'
+  spec.required_ruby_version = '>= 3.3.0'
   spec.authors       = ['Cory Lown']
   spec.email         = ['cory.lown@duke.edu']
 
@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'activesupport'
   spec.add_dependency 'lcsort'
 
-  spec.add_development_dependency 'bundler', '~> 2.0'
+  spec.add_development_dependency 'bundler', '~> 4.0'
   spec.add_development_dependency 'rake', '>= 12.3.3'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rubocop'

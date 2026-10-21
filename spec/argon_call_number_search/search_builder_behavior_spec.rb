@@ -30,7 +30,9 @@ class SearchBuilderTestClass
   include ArgonCallNumberSearch::SearchBuilderBehavior
   include TrlnArgon::Fields
 
-  attr_accessor :blacklight_params
+  SearchState = Struct.new(:params)
+
+  attr_accessor :search_state
 end
 
 RSpec.describe ArgonCallNumberSearch::SearchBuilderBehavior do
@@ -38,7 +40,7 @@ RSpec.describe ArgonCallNumberSearch::SearchBuilderBehavior do
 
   before do
     stub_const('SearchBuilder', SearchBuilderTestClass.new)
-    SearchBuilder.blacklight_params = blacklight_parameters
+    SearchBuilder.search_state = SearchBuilderTestClass::SearchState.new(blacklight_parameters)
   end
 
   describe 'lc call number search' do
