@@ -23,23 +23,23 @@ module ArgonCallNumberSearch
     end
 
     def truncate_call_number
-      blacklight_params[:q] = blacklight_params[:q].truncate_words(50, separator: /\W+/, omission: '') unless
-        blacklight_params[:q].split(/\b/).select { |x| x.match?(/\w/) }.length <= 50
+      search_state.params[:q] = search_state.params[:q].truncate_words(50, separator: /\W+/, omission: '') unless
+        search_state.params[:q].split(/\b/).select { |x| x.match?(/\w/) }.length <= 50
     end
 
     def default_call_num_search?
-      blacklight_params.key?(:search_field) &&
-        blacklight_params[:search_field] == 'call_number' &&
-        blacklight_params[:q].present? &&
-        blacklight_params[:q].respond_to?(:to_str)
+      search_state.params.key?(:search_field) &&
+        search_state.params[:search_field] == 'call_number' &&
+        search_state.params[:q].present? &&
+        search_state.params[:q].respond_to?(:to_str)
     end
 
     def advanced_call_num_search?
       return false unless advanced_search?
 
       advanced_search_keys.each do |key|
-        if blacklight_params[:clause][key][:field] == 'call_number' &&
-           !blacklight_params[:clause][key][:query].blank?
+        if search_state.params[:clause][key][:field] == 'call_number' &&
+           !search_state.params[:clause][key][:query].blank?
           return true
         end
       end
@@ -48,19 +48,19 @@ module ArgonCallNumberSearch
     end
 
     def advanced_search?
-      blacklight_params.key?(:clause)
+      search_state.params.key?(:clause)
     end
 
     def advanced_search_keys
-      blacklight_params[:clause].keys
+      search_state.params[:clause].keys
     end
 
     def call_number_query_str
-      return blacklight_params[:q].to_s if blacklight_params[:search_field] == 'call_number'
+      return search_state.params[:q].to_s if search_state.params[:search_field] == 'call_number'
       return unless advanced_search?
 
       advanced_search_keys.each do |key|
-        current_param = blacklight_params[:clause][key]
+        current_param = search_state.params[:clause][key]
         return current_param[:query].to_s if current_param[:field] == 'call_number'
       end
     end
